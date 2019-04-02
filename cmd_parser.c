@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
 		exit(0);
 	}
 
-	get_cmd = (char*)malloc(sizeof(char) * strlen(argv[1]) + 1);
+	get_cmd = (char*)calloc(strlen(argv[1]), sizeof(char));
 	snprintf(get_cmd, 1024, "%s", argv[1]);
 
 	fp = popen(get_cmd, "r");
@@ -33,4 +33,3 @@ int main(int argc, char *argv[]) {
 	printf("%s\n", output - (cmd_len * count));
 	return 0;
 }
-
