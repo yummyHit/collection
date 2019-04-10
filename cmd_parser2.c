@@ -12,7 +12,7 @@ int main(int argc, char *argv[], char *envp[]) {
 	char *get_cmd = NULL;
 	char *options[MAX_STACK] = {0,};
 	char buf[MAX_STACK] = {0,};
-	int	ret = 2;
+	int	ret = 2, bytes = 0;
 	pid_t pid_child;
 	posix_spawn_file_actions_t act;
 
@@ -70,7 +70,12 @@ int main(int argc, char *argv[], char *envp[]) {
 
 	close(in[1]), close(out[1]);
 
-	read(out[0], buf, sizeof(buf));
+	while(bytes < MAX_STACK) {
+		int end = read(out[0], buf + bytes, MAX_STACK - bytes);
+		if(end == 0) break;
+		bytes += end;
+	}
+
 	printf("out[0] buf is.. \n%s\n", buf);
 
 #endif
