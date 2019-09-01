@@ -1,3 +1,9 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * Shift text some times each of character
+ * This program made for crypto file
+ * @using: ./caesar_shift "input the string" <number>
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,17 +40,14 @@ int main(int argc, char *argv[]) {
 			if((*(str + i) + shift_time) > 'Z') {
 				int diff_count = *(str + i) + shift_time - 90;
 				printf("%c", 'A' + diff_count - 1);
-			} else {
+			} else
 				printf("%c", *(str + i) + shift_time);
-			}
-		}
-		else if(*(str + i) >= 'a' && *(str + i) <= 'z') {
+		} else if(*(str + i) >= 'a' && *(str + i) <= 'z') {
 			if((*(str + i) + shift_time) > 'z') {
 				int diff_count = *(str + i) + shift_time - 122;
 				printf("%c", 'a' + diff_count - 1);
-			} else {
+			} else
 				printf("%c", *(str + i) + shift_time);
-			}
 		}
 		i++;
 	}

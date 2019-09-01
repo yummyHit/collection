@@ -1,3 +1,8 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * get time every 1 second
+ * @using: ./get_time
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

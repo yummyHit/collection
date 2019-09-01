@@ -1,22 +1,25 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * Test file for chunk definition
+ * It seems like list and node
+ * @using: ./chunk_test
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
 typedef int element;
-typedef struct Chunk
-{
+typedef struct Chunk {
 	int size;
 	int start;
 	struct Chunk *link;
-}Chunk;
+} Chunk;
 
-void init(int request_size)
-{
+void init(int request_size) {
 	printf("start: %d\n", 0);
 	printf("size: %d\n", request_size);
 }
 
-Chunk *create(int data, element v_start, element v_size, Chunk *link)
-{
+Chunk *create(int data, element v_start, element v_size, Chunk *link) {
 	Chunk *new_node = (Chunk *)malloc(sizeof(Chunk));
 	element a, b, c;
 	element r_start;
@@ -32,44 +35,39 @@ Chunk *create(int data, element v_start, element v_size, Chunk *link)
 
 	return new_node;
 }
-Chunk *place(Chunk *p, int n)
-{
-	for (int i = 2; i < n; i++)
+
+Chunk *place(Chunk *p, int n) {
+	for(int i = 2; i < n; i++)
 		p = p->link;
 
 	return p;
 }
-void* myalloc(Chunk **available, Chunk *new, int pos)
-{
+
+void* myalloc(Chunk **available, Chunk *new, int pos) {
 	Chunk *p = NULL;
 
-	if (*available == NULL) //공백 리스트 일 경우
-	{
+	if(*available == NULL) {
 		*available = new;
 		new->link = NULL;
-	}
-	else if (pos == 1)
-	{
+	} else if(pos == 1) {
 		new->link = *available;
 		*available = new;
-	}
-	else
-	{
+	} else {
 		p = place(*available, pos);
 		new->link = p->link;
 		p->link = new;
 	}
 }
-void myfree(Chunk *p)
-{
+
+void myfree(Chunk *p) {
 	if(p) {
 		memset(p, 0, sizeof(Chunk));
 		free(p->link);
 		free(p);
 	}
 }
-int main(void)
-{
+
+int main(void) {
 	Chunk *a = NULL;
 	Chunk *b = NULL;
 	Chunk *c = NULL;
@@ -85,21 +83,28 @@ int main(void)
 	const int zero = request_size;
 
 	data = 0;
-	init = myalloc(&a, create(sum_data, 0, request_size, NULL), pos++);//create(0, start, size, link)
+	init = myalloc(&a, create(sum_data, 0, request_size, NULL), pos++);
+
 	data = 30;
 	sum_data += data;
 	a = myalloc(&a, create(sum_data, 30, request_size, NULL), pos);
+
 	data = 10;
 	sum_data += data;
 	b = myalloc(&a, create(sum_data, 10, request_size, NULL), pos);
+
 	data = 10;
 	sum_data += data;
 	c = myalloc(&a, create(sum_data, 10, request_size, NULL), pos--);
+
 	myfree(a);
+
 	data = 40;
 	sum_data += data;
 	a = myalloc(&a, create(sum_data, 40, request_size, NULL), pos);
+
 	myfree(a);
 	myfree(init);
+
 	return 0;
 }

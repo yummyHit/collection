@@ -1,4 +1,11 @@
-// gcc -o bruteforce bruteforce.c -lm
+/* Copyright 2019. yummyHit. All rights reserved.
+ * Execute brute force for not having dictionary file
+ * This program need only test reversing contents
+ * Some fix for string length and memory allocation
+ * Solution maybe add to files io for maximum memory size
+ * @using: ./bruteforce <target binary> <length>
+ * @compile: gcc -o bruteforce bruteforce.c -lm
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>

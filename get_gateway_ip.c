@@ -1,3 +1,9 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * it works such as "route -n" command or "netstat -nr" command or "ss -nr"
+ * can be used in redhat or debian linux
+ * @using: ./get_gateway_ip
+ */
+
 #include <netinet/in.h>
 #include <net/if.h>
 #include <stdio.h>
@@ -73,17 +79,16 @@ int readSock(int sockFd, char *bufPtr, int seqNum, int pId) {
 		}
 
 		// Check if the its the last message Else move the pointer to buffer appropriately
-		if(nlHdr->nlmsg_type == NLMSG_DONE) {
+		if(nlHdr->nlmsg_type == NLMSG_DONE)
 			break;
-		} else {
+		else {
 			bufPtr += readLen;
 			msgLen += readLen;
 		}
 
 		// Check if its a multi part message
-		if((nlHdr->nlmsg_flags & NLM_F_MULTI) == 0) {
+		if((nlHdr->nlmsg_flags & NLM_F_MULTI) == 0)
 			break;
-		}
 	} while((nlHdr->nlmsg_seq != seqNum) || (nlHdr->nlmsg_pid != pId));
 	return msgLen;
 }
@@ -99,8 +104,8 @@ void rtPrint(struct route_info *rtInfo) {
 	if(rtInfo->dstAddr.s_addr != 0) {
 		strncpy(tempBuf, (char *)inet_ntoa(rtInfo->dstAddr), sizeof(tempBuf));
 		rtInfo->flags |= U;
-	}
-	else sprintf(tempBuf, "0.0.0.0\t");
+	} else
+		sprintf(tempBuf, "0.0.0.0\t");
 	fprintf(stdout, "%s\t", tempBuf);
 
 	// Print Gateway address
@@ -109,28 +114,34 @@ void rtPrint(struct route_info *rtInfo) {
 		strncpy(tempBuf, (char *)inet_ntoa(rtInfo->gateWay), sizeof(tempBuf));
 		rtInfo->flags |= U;
 		rtInfo->flags |= G;
-	}
-	else sprintf(tempBuf, "0.0.0.0\t");
+	} else
+		sprintf(tempBuf, "0.0.0.0\t");
 	fprintf(stdout, "%s\t", tempBuf);
 
 	// Print Subnet Mask
 	memset(tempBuf, 0, sizeof(tempBuf));
-	if(rtInfo->netmask.s_addr != 0) strncpy(tempBuf, (char *)inet_ntoa(rtInfo->netmask), sizeof(tempBuf));
+	if(rtInfo->netmask.s_addr != 0) 
+		strncpy(tempBuf, (char *)inet_ntoa(rtInfo->netmask), sizeof(tempBuf));
 
 	if(rtInfo->dstAddr.s_addr != 0) {
 		for(ptr = strtok_r((char *)inet_ntoa(rtInfo->dstAddr), ".", &rptr); ptr; ptr = strtok_r(NULL, ".", &rptr))
 			if(*ptr != '0') 
 				classCnt++;
-		if(classCnt == 3 && tempBuf == NULL) sprintf(tempBuf, "255.255.255.0");
-		else if(classCnt == 2 && strncmp((char *)inet_ntoa(rtInfo->gateWay), tempBuf, 6)) sprintf(tempBuf, "255.255.0.0");
-		else if(classCnt == 1) sprintf(tempBuf, "255.0.0.0");
-	}
-	else sprintf(tempBuf, "0.0.0.0\t");
+		if(classCnt == 3 && tempBuf == NULL) 
+			sprintf(tempBuf, "255.255.255.0");
+		else if(classCnt == 2 && strncmp((char *)inet_ntoa(rtInfo->gateWay), tempBuf, 6)) 
+			sprintf(tempBuf, "255.255.0.0");
+		else if(classCnt == 1) 
+			sprintf(tempBuf, "255.0.0.0");
+	} else
+		sprintf(tempBuf, "0.0.0.0\t");
 	fprintf(stdout, "%s\t", tempBuf);
 
 	// Print Flags
-	if(rtInfo->flags > 0 && rtInfo->flags < 16) fprintf(stdout, "%-5s ", real_flag[rtInfo->flags]);
-	else fprintf(stdout, "%-5s ", real_flag[1]);
+	if(rtInfo->flags > 0 && rtInfo->flags < 16) 
+		fprintf(stdout, "%-5s ", real_flag[rtInfo->flags]);
+	else 
+		fprintf(stdout, "%-5s ", real_flag[1]);
 
 	// Print Metrics
 	fprintf(stdout, "%-6d ", rtInfo->metric);
@@ -146,8 +157,10 @@ void rtPrint(struct route_info *rtInfo) {
 
 /*
 	// Print Source address
-	if(rtInfo->srcAddr.s_addr != 0) strcpy(tempBuf, inet_ntoa(rtInfo->srcAddr));
-	else sprintf(tempBuf, "*.*.*.*\t");
+	if(rtInfo->srcAddr.s_addr != 0) 
+		strcpy(tempBuf, inet_ntoa(rtInfo->srcAddr));
+	else 
+		sprintf(tempBuf, "*.*.*.*\t");
 	fprintf(stdout, "%s\n", tempBuf);
 */
 }
@@ -210,7 +223,8 @@ int main() {
 
 	int sock = 0, len = 0, msgSeq = 0;
 
-	if((sock = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_ROUTE)) < 0) perror("Socket Creation: ");
+	if((sock = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_ROUTE)) < 0) 
+		perror("Socket Creation: ");
 
 	memset(msgBuf, 0, BUFSIZE);
 

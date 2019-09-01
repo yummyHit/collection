@@ -1,8 +1,10 @@
-/* Copyright yummyHit reserved.
+/* Copyright 2019. yummyHit. All rights reserved.
  * Get argc such as argc argument in main function
  * It works like preprocessor
- * @using: _vargs(arguments)
+ * @using: ./arg_count
+ * @api: when use "vargs(2, 4, 6, 8, 10);", counting 5 on vargs macro function
  */
+
 #include <stdio.h>
 #include <stdarg.h>
 
@@ -44,12 +46,14 @@ void _vargs(size_t argc, ...);
 
 void _vargs(size_t argc, ...) {
 	printf("Hello! yummyHit!!\nArguments Count Start!!\nargc: %lu\nArguments: ", argc);
+
     va_list ap;
     va_start(ap, argc);
-    for (int i = 0; i < argc; i++) {
+
+    for(int i = 0; i < argc; i++)
         printf("%d ", va_arg(ap, int));
-    }
     printf("\n");
+
     va_end(ap);
 }
 

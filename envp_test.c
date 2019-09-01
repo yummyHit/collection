@@ -1,3 +1,9 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * get current environment local shell
+ * It works such as env command
+ * @using: ./envp_test
+ */
+
 #include <stdio.h>
 
 int main(int argc, char *argv[], char **envp) {
@@ -9,9 +15,8 @@ int main(int argc, char *argv[], char **envp) {
 		printf("envp: %s, envp address: %p\n", thisEnv, thisEnv);
 	}
 
-	for(env = envp; *env != 0; env++, i++) {
+	for(env = envp; *env != 0; env++, i++)
 		printf("argv[%d]: %s, argv[%d] address: %p\n", i, argv[argc + i], i, argv[argc + i]);
-	}
 
 	printf("\n\n...All variable..\n\ni address: %p\nenv address: %p\nthisEnv address: %p\nenvp[0] address: %p\nargv[argc + 1] address: %p\n", &i, *env, thisEnv, envp[0], argv[argc + 1]);
 

@@ -1,3 +1,9 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * whose problem ? i got the flag who give me question
+ * actually, i don't remember question contents
+ * @using: ./getchar_in_while
+ */
+
 #include <stdio.h>
 
 int main() {
@@ -16,9 +22,12 @@ int main() {
 		for(i = 0; i < 7; i++) {
 			scanf("%c", &in[i]);
 			if(in[i] == 'a' || in[i] == 'f' || in[i] == 'k') {
-				if(in[i] == 'a') out[i] = table[0];
-				else if(in[i] == 'f') out[i] = table[1];
-				else if(in[i] == 'k') out[i] = table[2];
+				if(in[i] == 'a') 
+					out[i] = table[0];
+				else if(in[i] == 'f') 
+					out[i] = table[1];
+				else if(in[i] == 'k') 
+					out[i] = table[2];
 			} else {
 				printf("finale! welcome back, afk\n");
 				flag = 1;
@@ -27,8 +36,8 @@ int main() {
 		}
 	}
 
-	if(chk && !flag) printf("Success! Flag is... nothing\n");
+	if(chk && !flag) 
+		printf("Success! Flag is... nothing\n");
 
 	return 0;
 }
-

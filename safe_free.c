@@ -1,3 +1,10 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * safe memory free for use after free vulnerability
+ * @using: ./safe_free
+ * @function: safe_free()
+ *  param 1. character pointer
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

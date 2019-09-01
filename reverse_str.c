@@ -1,3 +1,8 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * change string for reverse such as rev command
+ * @using: ./reverse_str
+ */
+
 #include <stdio.h>
 #include <string.h>
 
@@ -12,9 +17,8 @@ int main(void) {
 		if(strncmp(str, "END", 3) == 0)
 			return 0;
 		len = strlen(str);
-		for(int i = len - 1; i >= 0; i--) {
+		for(int i = len - 1; i >= 0; i--)
 			printf("%c", str[i]);
-		}
 		__fpurge(stdin);
 		printf("\n");
 	}

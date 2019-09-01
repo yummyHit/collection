@@ -1,3 +1,9 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * Use posix library for system print out in prompt
+ * for need to print out when system function or exec() functions
+ * @using: ./cmd_parser2 "commands (with option ok)"
+ */
+
 #include <spawn.h>
 #include <stdio.h>
 #include <stdlib.h>

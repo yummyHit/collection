@@ -1,3 +1,10 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * string parse with command parse using posix library (in cmd_parser2)
+ * can't get string for system or exec, so it use cmd_parser function
+ * then it split data such as awk command
+ * @using: ./strtok_parser `which ommand` <command> <options>
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,7 +46,8 @@ void cmd_parser(char *cmd, char *options[], char *envp[], char *data) {
 
 	while(bytes < MAX_STACK) {
 		int end = read(out[0], buf + bytes, MAX_STACK - bytes);
-		if(end == 0) break;
+		if(end == 0) 
+			break;
 		bytes += end;
 	}
 
@@ -53,7 +61,10 @@ char **split_data(char *data, const char *delim, int *index) {
 	char *ptr = NULL, *rptr = NULL;
 	int i = 0;
 
-	for(i = 0, *index = 0; data[i]; i++) if((data[i] == ' ' || data[i] == '\t' || data[i] == '\n') && (data[i+1] != ' ' && data[i+1] != '\t' && data[i+1] != '\n')) (*index)++;
+	for(i = 0, *index = 0; data[i]; i++) 
+		if((data[i] == ' ' || data[i] == '\t' || data[i] == '\n') && 
+		   (data[i+1] != ' ' && data[i+1] != '\t' && data[i+1] != '\n')) 
+			(*index)++;
 	char **item = (char**)calloc(*index, sizeof(char**));
 
 	for(i = 0, ptr = strtok_r(data, delim, &rptr); ptr; ptr = strtok_r(NULL, delim, &rptr))

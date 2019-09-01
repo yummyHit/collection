@@ -1,3 +1,8 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * check process time diff
+ * @using: ./process_timer
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -8,9 +13,8 @@
 
 static void plus() {			// 호출할 함수 정의
 	int i = 0;
-	while (i<5000000) {			// 500만번 덧셈 연산
+	while(i<5000000)			// 500만번 덧셈 연산
 		i++;
-	}
 }
 
 int main(void) {
@@ -22,27 +26,19 @@ int main(void) {
 
 	t1 = times(&mytms);
 
-	for (i = 0;i<50;i++) {
-
-		if ((current_pid = fork()) == 0) {
-
+	for(i = 0;i<50;i++) {
+		if((current_pid = fork()) == 0) {
 			plus();
-
 			exit(0);
-		}
-
-		else if (current_pid < 0) {
+		} else if(current_pid < 0) {
 			printf("Error\n");
 			exit(1);
 		}
-
 	}
 
-	while ((child_pid = wait(&state)) > 0) {
+	while((child_pid = wait(&state)) > 0);
 
-	}
-
-	if (child_pid == -1) {
+	if(child_pid == -1) {
 		t2 = times(&mytms);
 		printf("Real time : %.1f sec\n", (double)(t2 - t1) / CLOCKS_PER_SEC);
 		printf("User time : %.1f sec\n", (double)mytms.tms_utime / CLOCKS_PER_SEC);

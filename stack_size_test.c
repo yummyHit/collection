@@ -1,3 +1,9 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * How can use stack size with file io
+ * can't believe ulimit's size, this source can help that solution
+ * @using: ./stack_size_test
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,7 +16,7 @@ int main(int argc, char **argv) {
 	char command[128];
 	int ret = 0;
 
-	for (size_t i = 0; i < MAX_STACK_SIZE; i++) {
+	for(size_t i = 0; i < MAX_STACK_SIZE; i++) {
 		memset(filename, 0, sizeof(filename));
 		sprintf(filename, "/tmp/%010ld.txt", i);
 		FILE *fp = fopen(filename, "w");
@@ -18,8 +24,7 @@ int main(int argc, char **argv) {
 		if (fp == NULL) {
 			printf("fp(count: %ld): failed!\n", i);
 			return ret;
-		}
-		else {
+		} else {
 			memset(command, 0, sizeof(command));
 			sprintf(command, "rm %s 2>/dev/null", filename);
 			ret = WEXITSTATUS(system(command));

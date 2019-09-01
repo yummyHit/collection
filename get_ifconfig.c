@@ -1,3 +1,9 @@
+/* Copyright 2019. yummyHit. All rights reserved.
+ * it works such as "ifconfig" command
+ * can be used in redhat or debian linux
+ * @using: ./get_ifconfig <Redhat or Debian>
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -109,8 +115,7 @@ int main(int argc, char *argv[]) {
 					if(flag_num & IFF_LOOPBACK) {
 						fprintf(stdout, "Local Loopback  ");
 						lo_flag = true;
-					}
-					else 
+					} else
 						fprintf(stdout, "Ethernet  ");
 
 					for(j = 0; j < 16; j++)
@@ -145,12 +150,11 @@ int main(int argc, char *argv[]) {
 				if(!ioctl(fd, SIOCGIFMTU, ifr))
 					fprintf(stdout, " MTU:%d  ", ifr->ifr_mtu);
 
-				if(!ioctl(fd, SIOCGIFMETRIC, ifr)) {
+				if(!ioctl(fd, SIOCGIFMETRIC, ifr))
 					if(ifr->ifr_metric == 0) 
 						fprintf(stdout, "Metric:%d\n", ifr->ifr_metric + 1);
 					else 
 						fprintf(stdout, "Metric:%d\n", ifr->ifr_metric);
-				}
 
 				if(!ioctl(fd, SIOCGIFTXQLEN, ifr))
 					fprintf(stdout, "%10stxqueuelen %d\n\n", " ", ifr->ifr_qlen);

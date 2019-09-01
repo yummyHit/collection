@@ -3,8 +3,8 @@
 #include <string.h>
 #include <sys/types.h>
 #include <regex.h>
-int main()
-{
+
+int main() {
 	regex_t regex;
 	int reti;
 	char msgbuf[100] = {0};
