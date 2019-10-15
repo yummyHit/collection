@@ -22,15 +22,10 @@ int main() {
 #endif
 
 #if STRING
-	for(unsigned i = 0; i < (strlen(a) < strlen(b) ? strlen(a) : strlen(b)); i++) {
-		a[i] ^= b[i];
-		b[i] ^= a[i];
-		a[i] ^= b[i];
-	}
+	for(unsigned i = 0; i < (strlen(a) < strlen(b) ? strlen(a) : strlen(b)); i++)
+		a[i] ^= b[i] ^= a[i] ^= b[i];
 #else
-	a ^= b;
-	b ^= a;
-	a ^= b;
+	a ^= b ^= a ^= b;
 #endif
 
 #if CHAR
