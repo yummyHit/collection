@@ -20,7 +20,7 @@ int loop() {
 }
 
 int main() {
-	int i;
+	int i = 0;
 
 	for(;i = loop();) 
 		if(i > 100) break;
