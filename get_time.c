@@ -20,13 +20,32 @@ char *get_nowtime(char *msg) {
 	return msg;
 }
 
+long long time_diff(unsigned flag) {
+	const long long nanosec = 1000000000LL;
+	static struct timespec s, e;
+	static long long diff = 0;
+	if(flag) {
+		if(clock_gettime(CLOCK_MONOTONIC, &e) == -1)
+			printf("clock_gettime error\n");
+		diff = nanosec * (e.tv_sec - s.tv_sec) + (e.tv_nsec - s.tv_nsec);
+	} else {
+		diff = 0;
+		if(clock_gettime(CLOCK_MONOTONIC, &s) == -1)
+			printf("clock_gettime error\n");
+	}
+
+	return diff / 1000000;
+}
+
 int main(int argc, char **argv) {
 	char msg[MSG_SIZE] = {0,};
+	time_diff(0);
 	printf("%s", get_nowtime(msg));
 	usleep(1000000);
 	printf("%s", get_nowtime(msg));
 	usleep(1000000);
 	printf("%s", get_nowtime(msg));
+	printf("Total elapsed: %lld ms\n", time_diff(1));
 	return 0;
 }
 
