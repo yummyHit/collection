@@ -18,21 +18,21 @@ int main(int argc, char *argv[], char *envp[]) {
 	char *get_cmd = NULL;
 	char *options[MAX_STACK] = {0,};
 	char buf[MAX_STACK] = {0,};
-	int	ret = 2, bytes = 0;
+	int	ret = 1, bytes = 0;
 	pid_t pid_child;
 	posix_spawn_file_actions_t act;
 
-	if(argc < 3) {
+	if(argc < 2) {
 		fprintf(stderr, "Usage: %s `which command` <command> [ <option1> <option2> ... ]\n", argv[0]);
 		fprintf(stderr, "       ex) `which ls` ls -l\n");
 		exit(0);
 	} else {
 		get_cmd = (char*)calloc(strlen(argv[1]), sizeof(char));
 		strncpy(get_cmd, argv[1], strlen(argv[1]));
-		int len = argc - 1;
+		int len = argc;
 		while(--len) {
-			options[ret - 2] = (char*)calloc(strlen(argv[ret]), sizeof(char));
-			strncpy(options[ret - 2], argv[ret], strlen(argv[ret]));
+			options[ret - 1] = (char*)calloc(strlen(argv[ret]), sizeof(char));
+			strncpy(options[ret - 1], argv[ret], strlen(argv[ret]));
 			ret++;
 		}
 	}
